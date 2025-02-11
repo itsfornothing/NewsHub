@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title%}Bookmarked News{% endblock title %}
+
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-info">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="container px-4 py-5" id="latest-news">
+    <h2 class="pb-2 border-bottom">Bookmarked News</h2>
+    <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-lg-3">
+        {% if News %}
+        {% for article in News%}
+        <div class="col">
+            <div class="card shadow-sm h-100">
+                <img src="{{ article.news_article.urltoimage }}" class="object-fit-fill rounded mx-auto d-block" alt="..."
+                    height="250" width="400">
+                <div class="card-body">
+                    <p class="text-secondary card-text">{{ article.news_article.category }}</p>
+                    <h5 class="text-body-emphasis card-text">{{ article.news_article.title }}</h5>
+                    <p>{{ article.description }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{{ article.news_article.url }}" class="link-offset-2 link-underline link-underline-opacity-0">
+                            <span>read more...</span>
+                        </a>
+                        <small class="text-body-secondary"></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <img src="{% static 'images/spongebob-rainbow.gif' %}" alt="gif" height="400" width="600">
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

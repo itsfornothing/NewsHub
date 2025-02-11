@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block title%}NewsHub{% endblock title %}
+{% block content %}
+<div class="container px-4 py-5" id="featured-3">
+    <h2 class="pb-2 border-bottom">Featured Stories</h2>
+    <div class="row g-4">
+        {% for article in News|slice:"4:6" %}
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <img src="{{ article.urltoimage }}" class="object-fit-fill rounded mx-auto d-block" alt="..."
+                    height="280" width="610">
+                <div class="card-body">
+                    <p class="text-secondary card-text">{{ article.category }}</p>
+                    <h5 class="text-body-emphasis card-text">{{ article.title }}</h5>
+                    <p>{{ article.description }}</p>
+
+
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{{ article.url }}" class="link-offset-2 link-underline link-underline-opacity-0">
+                            <span>read more...</span>
+
+                        </a>
+                        {% if user.is_authenticated %}
+                        <form action="{% url 'bookmarks' news_id=article.news_id %}" method="POST" id="bookmarkForm">
+                            {%csrf_token%}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                onclick="showAlert()" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                <path
+                                    d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+                            </svg>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="container px-4 py-5" id="latest-news">
+    <h2 class="pb-2 border-bottom">Latest News</h2>
+    <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-lg-3">
+        {% for article in News|slice:"19:22" %}
+        <div class="col">
+            <div class="card shadow-sm h-100">
+                <img src="{{ article.urltoimage }}" class="object-fit-fill rounded mx-auto d-block" alt="..."
+                    height="250" width="400">
+                <div class="card-body">
+                    <p class="text-secondary card-text">{{ article.category }}</p>
+                    <h5 class="text-body-emphasis card-text">{{ article.title }}</h5>
+                    <p>{{ article.description }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{{ article.url }}" class="link-offset-2 link-underline link-underline-opacity-0">
+                            <span>read more...</span>
+                        </a>
+                        {% if user.is_authenticated %}
+                        <form action="{% url 'bookmarks' news_id=article.news_id %}" method="POST" id="bookmarkForm">
+                            {%csrf_token%}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                onclick="showAlert()" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                <path
+                                    d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+                            </svg>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div>
+    <h3>Trending Topics</h3>
+</div>
+<div class="d-flex gap-2 justify-content-left py-3">
+
+    <a href="{% url 'technews'%}"><span>#Technology</span></a>
+    <a href="{% url 'sportsnews'%}"><span>#Sport</span></a>
+    <a href="{% url 'politicsnews'%}"><span>#Politics</span></a>
+    <a href="{% url 'healthnews'%}"><span>#Health</span></a>
+</div>
+
+
+
+
+{% endblock content %}
